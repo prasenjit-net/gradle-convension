@@ -1,0 +1,114 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /people:
+        summary: Path used to manage the list of people.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Person` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Person'
+                    description: Successful response - returns an array of `Person` entities.
+            operationId: getpeople
+            summary: List All people
+            description: Gets a list of all `Person` entities.
+        post:
+            requestBody:
+                description: A new `Person` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Person'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createPerson
+            summary: Create a Person
+            description: Creates a new instance of a `Person`.
+    '/people/{personId}':
+        summary: Path used to manage a single Person.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Person`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Person'
+                    description: Successful response - returns a single `Person`.
+            operationId: getPerson
+            summary: Get a Person
+            description: Gets the details of a single instance of a `Person`.
+        put:
+            requestBody:
+                description: Updated `Person` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Person'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updatePerson
+            summary: Update a Person
+            description: Updates an existing `Person`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deletePerson
+            summary: Delete a Person
+            description: Deletes an existing `Person`.
+        parameters:
+            -
+                name: personId
+                description: A unique identifier for a `Person`.
+                schema:
+                    type: string
+                in: path
+                required: true
+components:
+    schemas:
+        Person:
+            title: Root Type for Person
+            description: ''
+            type: object
+            properties:
+                name:
+                    type: string
+                address:
+                    type: object
+                    properties:
+                        street:
+                            type: string
+                        apt:
+                            type: string
+                        city:
+                            type: string
+                        state:
+                            type: string
+                        zip:
+                            type: string
+            example:
+                name: pp
+                address:
+                    street: 40640 High St
+                    apt: '506'
+                    city: Fremont
+                    state: CA
+                    zip: '94538'
